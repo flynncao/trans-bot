@@ -60,6 +60,7 @@ async def _trans_filter(_, __, msg: Message):
     logger.debug(f"检测消息: {t}")
     if not t:
         return False
+    print('t', t)
     if t.startswith("/"):
         logger.debug("是命令, 跳过")
         return False

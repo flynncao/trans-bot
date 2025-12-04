@@ -13,6 +13,7 @@ from .utils import build_messages
 from translator.prompts import TRANSLATE_PROMPT
 from tenacity import retry, stop_after_attempt, wait_fixed
 
+from config.config import cfg
 
 class GoogleTranslator(BaseTranslator):
     """谷歌翻译"""
@@ -54,7 +55,8 @@ class OpenAITranslator(BaseTranslator):
                 messages=build_messages(
                     self.prompt, f"Translate the text to {target_lang}:\n{text}"
                 ),
-                temperature=0,
+               # disalbe temperature for better translation consistency if configured
+               temperature=None if cfg.disable_temprature_for_openai else 0
             )
         except Exception as e:
             raise TranslationError(f"OpenAI翻译错误: {e}")
