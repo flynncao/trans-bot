@@ -18,28 +18,6 @@ class BotConfig:
         self.default_lang = getenv("DEFAULT_LANG", "zh-hans")
         self.trans_provider = getenv("TRANS_PROVIDER", "google")
         self.trans_model = getenv("TRANS_MODEL", "gpt-4o-mini")
-        self.disable_temprature_for_openai = (
-            getenv("DISABLE_TEMPERATURE_FOR_OPENAI", "false").lower() == "true"
-        )
-        self.strict_filter_types = list(
-            map(
-                str.strip,
-                getenv("STRICT_FILTER_TYPES", "").lower().split(","),
-            )
-        )
-        self.skip_source_langs = list(
-            map(
-                str.strip,
-                getenv("SKIP_SOURCE_LANGS", "").lower().split(","),
-            )
-        )
-        self.skip_target_langs = list(
-            map(
-                str.strip,
-                getenv("SKIP_TARGET_LANGS", "").lower().split(","),
-            )
-        )
-        
 
     class _Proxy:
         def __init__(self, url: str):

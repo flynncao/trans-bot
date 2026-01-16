@@ -7,9 +7,6 @@ from pyrogram import Client
 from pyrogram.types import Message
 from translator import Detecter
 
-from config.config import cfg
-
-strict_filter_types = cfg.strict_filter_types
 
 async def get_group_lang(cli: Client, msg: Message) -> str | None:
     msgs = await cli.get_messages(msg.chat.id, range(msg.id - 100, msg.id - 1))
@@ -62,10 +59,7 @@ URL_PATTERN = re.compile(
 
 def is_only_url(text):
     text = text.strip()
-    if strict_filter_types and "url" in strict_filter_types:
-        return bool(URL_PATTERN.search(text))
-    else:
-        return bool(URL_PATTERN.fullmatch(text))
+    return bool(URL_PATTERN.fullmatch(text))
 
 
 def is_symbols_only(text):
@@ -112,8 +106,4 @@ def is_only_mentions(text):
 
     pattern = re.compile(r"^(@[a-zA-Z0-9_]{1,32})(\s+@[a-zA-Z0-9_]{5,32})*$")
 
-    if strict_filter_types and "mentions" in strict_filter_types:
-        return bool(pattern.search(text))
-    else:
-        return bool(pattern.fullmatch(text))
-    
+    return bool(pattern.match(text))
